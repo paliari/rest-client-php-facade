@@ -1,0 +1,24 @@
+{
+    "name": "paliari/rest-client-php-facade",
+    "version": "0.1.0-alpha",
+    "description": "RestClientFacade easy to use simple and objective",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marcos Paliari",
+            "email": "marcos@paliari.com.br"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Paliari\\RestClientFacade\\": "src/"
+        }
+    },
+    "require": {
+        "nategood/httpful": "dev-master",
+        "analog/analog": "dev-master"
+    },
+    "scripts": {
+        "post-install-cmd": ["test -e phpunit.phar || wget http://pear.phpunit.de/get/phpunit.phar && chmod +x phpunit.phar"]
+    }
+}
