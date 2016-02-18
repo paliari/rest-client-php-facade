@@ -1,13 +1,5 @@
 <?php
-/**
- *
- * User: marcos
- * Date: 23/09/13
- * Time: 16:39
- */
-
 namespace Paliari\RestClientFacade;
-
 
 use Httpful\Request;
 
@@ -24,23 +16,20 @@ class ClientFacade
     protected $config = array();
 
     /**
-     * @param string $base_uri
      * @param array $config
      */
-    public function __construct($config=array())
+    public function __construct($config = array())
     {
-        $this->config = array_merge(
+        $this->config   = array_merge(
             array(
                 'base_uri' => null,
                 'username' => null,
                 'password' => null,
-                'mime' => null,
+                'mime'     => null,
             ), (array)$config
         );
         $this->base_uri = $this->config['base_uri'];
-        $template = Request::init()
-            ->mime($this->config['mime'])
-        ;
+        $template       = Request::init()->mime($this->config['mime']);
         if ($this->config['username']) {
             $template->authenticateWith($this->config['username'], $this->config['password']);
         }
@@ -49,6 +38,7 @@ class ClientFacade
 
     /**
      * HTTP Method Get
+     *
      * @param string $url optional uri to use
      *
      * @return Request
@@ -56,6 +46,7 @@ class ClientFacade
     public function get($url)
     {
         $url = $this->prepareUrl($url);
+
         return Request::get($url, $this->config['mime']);
     }
 
@@ -70,6 +61,7 @@ class ClientFacade
     public function post($url, $payload = null)
     {
         $url = $this->prepareUrl($url);
+
         return Request::post($url, $payload, $this->config['mime']);
     }
 
@@ -84,6 +76,7 @@ class ClientFacade
     public function put($url, $payload = null)
     {
         $url = $this->prepareUrl($url);
+
         return Request::put($url, $payload, $this->config['mime']);
     }
 
@@ -98,6 +91,7 @@ class ClientFacade
     public function patch($url, $payload = null)
     {
         $url = $this->prepareUrl($url);
+
         return Request::patch($url, $payload, $this->config['mime']);
     }
 
@@ -111,12 +105,14 @@ class ClientFacade
     public function delete($url)
     {
         $url = $this->prepareUrl($url);
+
         return Request::delete($url, $this->config['mime']);
     }
 
     public function prepareUrl($url)
     {
         $url = rtrim($this->base_uri, '/') . '/' . ltrim($url, '/');
+
         return $url;
     }
 
