@@ -37,6 +37,20 @@ class ClientFacade
     }
 
     /**
+     * @param string $mime
+     *
+     * @return string
+     */
+    public function mime($mime = '')
+    {
+        if ('' !== $mime) {
+            $this->config['mime'] = $mime;
+        }
+
+        return $this->config['mime'];
+    }
+
+    /**
      * HTTP Method Get
      *
      * @param string $url optional uri to use
