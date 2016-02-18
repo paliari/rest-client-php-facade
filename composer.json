@@ -17,8 +17,5 @@
     "require": {
         "nategood/httpful": "dev-master",
         "analog/analog": "dev-master"
-    },
-    "scripts": {
-        "post-install-cmd": ["test -e phpunit.phar || wget http://pear.phpunit.de/get/phpunit.phar && chmod +x phpunit.phar"]
     }
 }
