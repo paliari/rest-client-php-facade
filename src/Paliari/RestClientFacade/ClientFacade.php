@@ -54,14 +54,15 @@ class ClientFacade
      * HTTP Method Get
      *
      * @param string $url optional uri to use
+     * @param string $mime
      *
      * @return Request
      */
-    public function get($url)
+    public function get($url, $mime = '')
     {
         $url = $this->prepareUrl($url);
 
-        return Request::get($url, $this->config['mime']);
+        return Request::get($url, $mime ?: $this->mime());
     }
 
     /**
@@ -69,14 +70,15 @@ class ClientFacade
      *
      * @param string $url optional uri to use
      * @param string $payload data to send in body of request
+     * @param string $mime
      *
      * @return Request
      */
-    public function post($url, $payload = null)
+    public function post($url, $payload = null, $mime = '')
     {
         $url = $this->prepareUrl($url);
 
-        return Request::post($url, $payload, $this->config['mime']);
+        return Request::post($url, $payload, $mime ?: $this->mime());
     }
 
     /**
@@ -84,14 +86,15 @@ class ClientFacade
      *
      * @param string $url optional uri to use
      * @param string $payload data to send in body of request
+     * @param string $mime
      *
      * @return Request
      */
-    public function put($url, $payload = null)
+    public function put($url, $payload = null, $mime = '')
     {
         $url = $this->prepareUrl($url);
 
-        return Request::put($url, $payload, $this->config['mime']);
+        return Request::put($url, $payload, $mime ?: $this->mime());
     }
 
     /**
@@ -99,28 +102,30 @@ class ClientFacade
      *
      * @param string $url optional uri to use
      * @param string $payload data to send in body of request
+     * @param string $mime
      *
      * @return Request
      */
-    public function patch($url, $payload = null)
+    public function patch($url, $payload = null, $mime = '')
     {
         $url = $this->prepareUrl($url);
 
-        return Request::patch($url, $payload, $this->config['mime']);
+        return Request::patch($url, $payload, $mime ?: $this->mime());
     }
 
     /**
      * HTTP Method Delete
      *
      * @param string $url optional uri to use
+     * @param string $mime
      *
      * @return Request
      */
-    public function delete($url)
+    public function delete($url, $mime = '')
     {
         $url = $this->prepareUrl($url);
 
-        return Request::delete($url, $this->config['mime']);
+        return Request::delete($url, $mime ?: $this->mime());
     }
 
     public function prepareUrl($url)
