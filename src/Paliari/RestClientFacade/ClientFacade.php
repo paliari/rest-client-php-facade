@@ -26,6 +26,7 @@ class ClientFacade
                 'username' => null,
                 'password' => null,
                 'mime'     => null,
+                'timeout'  => null,
             ), (array)$config
         );
         $this->base_uri = $this->config['base_uri'];
@@ -51,6 +52,20 @@ class ClientFacade
     }
 
     /**
+     * @param int $timeout
+     *
+     * @return int
+     */
+    public function timeout($timeout = null)
+    {
+        if (null !== $timeout) {
+            $this->config['timeout'] = $timeout;
+        }
+
+        return $this->config['timeout'];
+    }
+
+    /**
      * HTTP Method Get
      *
      * @param string $url optional uri to use
@@ -60,9 +75,7 @@ class ClientFacade
      */
     public function get($url, $mime = '')
     {
-        $url = $this->prepareUrl($url);
-
-        return Request::get($url, $mime ?: $this->mime());
+        return $this->call('get', $url, null, $mime);
     }
 
     /**
@@ -76,9 +89,7 @@ class ClientFacade
      */
     public function post($url, $payload = null, $mime = '')
     {
-        $url = $this->prepareUrl($url);
-
-        return Request::post($url, $payload, $mime ?: $this->mime());
+        return $this->call('post', $url, $payload, $mime);
     }
 
     /**
@@ -92,9 +103,7 @@ class ClientFacade
      */
     public function put($url, $payload = null, $mime = '')
     {
-        $url = $this->prepareUrl($url);
-
-        return Request::put($url, $payload, $mime ?: $this->mime());
+        return $this->call('put', $url, $payload, $mime);
     }
 
     /**
@@ -108,9 +117,7 @@ class ClientFacade
      */
     public function patch($url, $payload = null, $mime = '')
     {
-        $url = $this->prepareUrl($url);
-
-        return Request::patch($url, $payload, $mime ?: $this->mime());
+        return $this->call('patch', $url, $payload, $mime);
     }
 
     /**
@@ -123,9 +130,7 @@ class ClientFacade
      */
     public function delete($url, $mime = '')
     {
-        $url = $this->prepareUrl($url);
-
-        return Request::delete($url, $mime ?: $this->mime());
+        return $this->call('delete', $url, null, $mime);
     }
 
     public function prepareUrl($url)
@@ -133,6 +138,30 @@ class ClientFacade
         $url = rtrim($this->base_uri, '/') . '/' . ltrim($url, '/');
 
         return $url;
+    }
+
+    /**
+     * @param string $method
+     * @param string $url
+     * @param null   $payload
+     * @param string $mime
+     *
+     * @return Request
+     */
+    protected function call($method, $url, $payload = null, $mime = '')
+    {
+        $url  = $this->prepareUrl($url);
+        $mime = $mime ?: $this->mime();
+        if (in_array($method, ['get', 'delete'])) {
+            $request = Request::$method($url, $mime);
+        } else {
+            $request = Request::$method($url, $payload, $mime);
+        }
+        if ($timeout = $this->timeout()) {
+            $request->timeout($timeout);
+        }
+
+        return $request;
     }
 
 }
