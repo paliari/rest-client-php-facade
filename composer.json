@@ -15,7 +15,9 @@
         }
     },
     "require": {
-        "nategood/httpful": "dev-master",
-        "analog/analog": "dev-master"
+        "nategood/httpful": "^0.2.20"
+    },
+    "require-dev": {
+        "analog/analog": "^1.0"
     }
 }
