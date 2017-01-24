@@ -1,6 +1,6 @@
 {
     "name": "paliari/rest-client-php-facade",
-    "version": "0.1.0-alpha",
+    "version": "0.1.1",
     "description": "RestClientFacade easy to use simple and objective",
     "license": "MIT",
     "authors": [
