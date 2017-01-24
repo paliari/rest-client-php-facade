@@ -18,6 +18,7 @@
         "nategood/httpful": "^0.2.20"
     },
     "require-dev": {
-        "analog/analog": "^1.0"
+        "analog/analog": "^1.0",
+        "paliari/php-utils": "^1.1"
     }
 }
